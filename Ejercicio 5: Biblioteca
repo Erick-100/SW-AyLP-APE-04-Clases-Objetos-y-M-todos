@@ -1,0 +1,62 @@
+class Usuario {
+    String nombre;
+    String cedula;
+
+    Usuario(String nombre, String cedula) {
+        this.nombre = nombre;
+        this.cedula = cedula;
+    }
+}
+
+class Libro {
+    String titulo;
+    boolean disponible;
+
+    Libro(String titulo) {
+        this.titulo = titulo;
+        this.disponible = true;
+    }
+
+    boolean prestar() {
+        if (disponible) {
+            disponible = false;
+            return true;
+        }
+        return false;
+    }
+
+    void devolver() {
+        disponible = true;
+    }
+}
+
+class Prestamo {
+    Usuario usuario;
+    Libro libro;
+
+    Prestamo(Usuario usuario, Libro libro) {
+        this.usuario = usuario;
+        this.libro = libro;
+    }
+
+    void registrar() {
+        if (libro.prestar()) {
+            System.out.println(usuario.nombre + " (CI " + usuario.cedula
+                    + ") recibió el libro \"" + libro.titulo + "\".");
+        } else {
+            System.out.println(usuario.nombre + ": el libro \""
+                    + libro.titulo + "\" no está disponible.");
+        }
+    }
+}
+
+public class Ejercicio5 {
+    public static void main(String[] args) {
+        Usuario u1 = new Usuario("Mateo", "1800000001");
+        Usuario u2 = new Usuario("Paulo", "1800000002");
+        Libro libro = new Libro("Estructuras de Datos");
+
+        new Prestamo(u1, libro).registrar();  // se presta
+        new Prestamo(u2, libro).registrar();  // no disponible
+    }
+}
