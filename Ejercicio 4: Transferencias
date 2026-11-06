@@ -1,0 +1,48 @@
+class Cuenta {
+    String titular;
+    double saldo;
+
+    Cuenta(String titular, double saldo) {
+        this.titular = titular;
+        this.saldo = saldo;
+    }
+
+    void depositar(double monto) {
+        saldo += monto;
+    }
+
+    boolean retirar(double monto) {
+        if (monto > 0 && monto <= saldo) {
+            saldo -= monto;
+            return true;
+        }
+        return false;
+    }
+
+    void transferir(Cuenta destino, double monto) {
+        if (retirar(monto)) {
+            destino.depositar(monto);
+            System.out.println("Transferencia de $" + monto + " de "
+                    + titular + " a " + destino.titular + " exitosa.");
+        } else {
+            System.out.println("Transferencia fallida: fondos insuficientes.");
+        }
+    }
+
+    void mostrar() {
+        System.out.println(titular + " -> Saldo: $" + saldo);
+    }
+}
+
+public class Ejercicio4 {
+    public static void main(String[] args) {
+        Cuenta c1 = new Cuenta("Ana", 500);
+        Cuenta c2 = new Cuenta("Luis", 100);
+
+        c1.transferir(c2, 200);   // válida
+        c1.transferir(c2, 1000);  // falla
+
+        c1.mostrar();
+        c2.mostrar();
+    }
+}
